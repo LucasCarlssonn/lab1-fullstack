@@ -6,11 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users</title>
     <script src="index.js"></script>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 4px 20px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
 </head>
-<body>
+<body onload="createTable()">
     <h1>List of users:</h1>
-    <input type="button" onclick="createTable()" value="Create table from JSON">
-    <p id="showData">wap</p>
+    <input type="button" onclick="createTable()" value="Refresh table">
+    <p id="showData"></p>
+    <form id="create-form" onsubmit="createUser()">
+        <h2>Create user</h2>
+        <label>Name</label><br>
+        <input type="text" id="create-name"><br><br>
+        <label>Age</label><br>
+        <input type="age" id="create-age"><br><br>
+        <button type="submit">Create user</button> <br><br>
+    </form>
     
 </body>
 </html>

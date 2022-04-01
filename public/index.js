@@ -1,7 +1,4 @@
-const { response } = require("express");
-
 const test = document.getElementById("test");
-const button = document.getElementById("showUsers");
 
 function fetchUsers(){
     // fetch("/api/users", {
@@ -13,6 +10,63 @@ function fetchUsers(){
     // .then(res => res.json())
     // .then(response => {
     // })
+}
+
+// createForm.addEventListener("submit", e => {
+//     e.preventDefault();
+//     const userDetails = {
+//         name: createName.value,
+//         age: createAge.value
+//     };
+
+//     fetch("/api/users", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(userDetails)
+//     })
+//     .then(res => res.json())
+//     .then(response => {
+//         if(response.error) {
+//             errorMsg.innerHTML = response.error;
+//         } 
+//         else {
+//             errorMsg.innerHTML = "";
+//         }
+//     });
+// });
+function deleteUser(ID){
+    fetch(`/api/users/${ID}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    location.reload()
+}
+
+
+function createUser(){
+    const createName = document.getElementById("create-name");
+    const createAge = document.getElementById("create-age");
+    const userDetails = {
+        name: createName.value,
+        age: createAge.value
+    };
+
+    fetch("/api/users", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userDetails)
+    })
+    .then(res => res.json())
+    .then(response => {
+        response
+
+    });
 }
 
 
@@ -55,6 +109,11 @@ function createTable(){
                 var tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = response[i][col[j]];
             }
+            var tabCell = tr.insertCell(-1);
+            var btn = document.createElement("button");
+            btn.innerHTML = "delete"
+            btn.setAttribute("onclick", `deleteUser(${response[i].ID})`);
+            tabCell.appendChild(btn)
         }
 
         var divContainer = document.getElementById("showData");
@@ -63,4 +122,4 @@ function createTable(){
     })
 }
 
-console.log(fetchUsers());
+

@@ -12,7 +12,10 @@ router.get("/users", async (req, res) => {
             largest = user.ID
         }
     }
-    console.log(largest);
+    if(largest == NaN){
+        console.log(largest);
+        console.log("is NaN"); 
+    }
     console.log(users.length);
     res.send(users);
 });
@@ -31,12 +34,20 @@ router.get("/users/:id", async (req, res) =>{
 });
 router.post("/users", async (req, res) => {
     const users = await user.find();
-    for (let user of users){
-        var largest = user.ID
-        if(user.ID > largest){
-            largest = user.ID
+    if(users.length == 0){
+        largest = "0";
+    } else {
+        for (let user of users){
+            var largest = user.ID
+            if(user.ID > largest){
+                largest = user.ID
+            }
+        }
+        if (largest == "NaN"){
+            largest = "0";
         }
     }
+    console.log("largest" + largest);
     const userID = parseInt(largest) + 1
     const newUser = new user({
         ID: userID,
@@ -74,7 +85,7 @@ router.put("/users/:id", async (req, res) => {
 router.delete("/users/:id", async (req, res) => {
     try {
         await user.deleteOne({ID: req.params.id})
-        res.status(204).send();
+        res.status(204).send({sucess: `User with ID ${req.params.id} was deleted`});
     } catch (error) {
         res.status(404).send({error: "User doesn't exist"})
     }
