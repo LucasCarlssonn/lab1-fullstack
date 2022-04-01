@@ -30,7 +30,20 @@ function createUser(){
 
     });
 }
+function updateUser(){
+    fetch("/api/users/:id", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userDetails)
+    })
+    .then(res => res.json())
+    .then(response => {
+        response
 
+    });
+}
 
 // Function found at https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
 function createTable(){

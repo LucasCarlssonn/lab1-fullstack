@@ -6,18 +6,7 @@ router.get("/", async (req, res) => {
 });
 router.get("/users", async (req, res) => {
     const users = await user.find();
-    for (let user of users){
-        var largest = user.ID
-        if(user.ID > largest){
-            largest = user.ID
-        }
-    }
-    if(largest == NaN){
-        console.log(largest);
-        console.log("is NaN"); 
-    }
-    console.log(users.length);
-    res.send(users);
+    res.json(users);
 });
 
 router.get("/users/:id", async (req, res) =>{
@@ -47,7 +36,6 @@ router.post("/users", async (req, res) => {
             largest = "0";
         }
     }
-    console.log("largest" + largest);
     const userID = parseInt(largest) + 1
     const newUser = new user({
         ID: userID,
