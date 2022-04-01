@@ -16,7 +16,7 @@ function fetchUsers(){
 }
 
 
-
+// Function found at https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
 function createTable(){
     fetch("/api/users", {
         method: "GET",
