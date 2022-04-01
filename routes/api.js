@@ -62,8 +62,10 @@ router.put("/users/:id", async (req, res) => {
         if (req.body.age){
             updateUser.age = req.body.age
         }
-        await updateUser.save().send(updateUser)
+        await updateUser.save()
+        res.send(updateUser)
     } catch (error) {
+        console.log(error);
         res.status(404)
         res.send({error: "User doesn't exist"})
     }
