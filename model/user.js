@@ -7,13 +7,13 @@ const userSchema = new mongoose.Schema({
         max: 100,
         required: true
     },
-    firstName:{
+    name:{
         type: String,
         min: 3,
         max: 100,
         required: true
     },
-    lastName: {
+    age: {
         type: String,
         min: 8,
         max: 100,
