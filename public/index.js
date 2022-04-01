@@ -5,6 +5,9 @@ function deleteUser(ID){
             "Content-Type": "application/json"
         }
     })
+    .then(res => {
+        console.log(res);
+    })
     createTable();
 }
 
@@ -30,13 +33,20 @@ function createUser(){
 
     });
 }
-function updateUser(){
-    fetch("/api/users/:id", {
+function updateUser(ID, nameIndex, ageIndex){
+
+    const name = document.getElementById(nameIndex).innerHTML;
+    const age = document.getElementById(ageIndex).innerHTML;
+    const userUpdate = {
+        name: name,
+        age: age
+    };
+    fetch(`/api/users/${ID}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(userDetails)
+        body: JSON.stringify(userUpdate)
     })
     .then(res => res.json())
     .then(response => {
@@ -83,12 +93,23 @@ function createTable(){
             for (let j = 0; j < col.length; j++){
                 var tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = response[i][col[j]];
+                tabCell.setAttribute("contenteditable", "true")
+                tabCell.id = `${i}${j}`
             }
             var tabCell = tr.insertCell(-1);
-            var btn = document.createElement("button");
-            btn.innerHTML = "delete"
-            btn.setAttribute("onclick", `deleteUser(${response[i].ID})`);
-            tabCell.appendChild(btn)
+            var delBtn = document.createElement("button");
+            delBtn.innerHTML = "delete"
+            delBtn.setAttribute("onclick", `deleteUser(${response[i].ID})`);
+            tabCell.appendChild(delBtn)
+
+            var tabCell = tr.insertCell(-1);
+            var updateBtn = document.createElement("button");
+            updateBtn.innerHTML = "update"
+            updateBtn.setAttribute("onclick",
+             `updateUser(${response[i].ID},
+                 "${i}1",
+                 "${i}2")`);
+            tabCell.appendChild(updateBtn)
         }
 
         var divContainer = document.getElementById("showData");

@@ -44,7 +44,8 @@ router.post("/users", async (req, res) => {
     });
     try {
         await newUser.save();
-        res.status(201).send({success: "User created"});
+        const users = await user.find();
+        res.status(201).send(users);
         console.log("User created");
     } catch (error) {
         console.log(error);
@@ -62,7 +63,6 @@ router.put("/users/:id", async (req, res) => {
             updateUser.age = req.body.age
         }
         await updateUser.save()
-        res.send(updateUser)
     } catch (error) {
         console.log(error);
         res.status(404)
@@ -73,9 +73,10 @@ router.put("/users/:id", async (req, res) => {
 router.delete("/users/:id", async (req, res) => {
     try {
         await user.deleteOne({ID: req.params.id})
-        res.status(204).send({sucess: `User with ID ${req.params.id} was deleted`});
+        res.status(200).send({sucess: `User with ID ${req.params.id} was deleted`});
     } catch (error) {
-        res.status(404).send({error: "User doesn't exist"})
+        res.status(404)
+        res.send({error: "User doesn't exist"})
     }
 });
 
