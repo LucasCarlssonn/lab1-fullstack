@@ -1,41 +1,3 @@
-const test = document.getElementById("test");
-
-function fetchUsers(){
-    // fetch("/api/users", {
-    //     method: "GET",
-    //     headers: {
-    //         "Content-Type" : "application/json"
-    //     }
-    // })
-    // .then(res => res.json())
-    // .then(response => {
-    // })
-}
-
-// createForm.addEventListener("submit", e => {
-//     e.preventDefault();
-//     const userDetails = {
-//         name: createName.value,
-//         age: createAge.value
-//     };
-
-//     fetch("/api/users", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(userDetails)
-//     })
-//     .then(res => res.json())
-//     .then(response => {
-//         if(response.error) {
-//             errorMsg.innerHTML = response.error;
-//         } 
-//         else {
-//             errorMsg.innerHTML = "";
-//         }
-//     });
-// });
 function deleteUser(ID){
     fetch(`/api/users/${ID}`, {
         method: "DELETE",
@@ -43,7 +5,7 @@ function deleteUser(ID){
             "Content-Type": "application/json"
         }
     })
-    location.reload()
+    createTable();
 }
 
 
