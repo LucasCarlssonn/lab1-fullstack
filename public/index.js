@@ -51,7 +51,6 @@ function updateUser(ID, nameIndex, ageIndex){
     .then(res => res.json())
     .then(response => {
         //createTable();
-
     });
 }
 
@@ -66,7 +65,11 @@ function showUser(ID){
     .then(response => {
         document.getElementById("showUser").innerHTML = 
         `<h3>Details about user</h3>
+        <p>ID: ${response.ID}<br>
+        Name: ${response.name}</p><br>
+        <p>age: ${response.age}</p><br>
         ${JSON.stringify(response)}`
+
 
     });
 }
@@ -98,7 +101,7 @@ function createTable(){
         var tr = table.insertRow(-1);
 
         for (let i = 0; i < col.length; i++){
-            var th = document.createElement("th");
+            let th = document.createElement("th");
             th.innerHTML = col[i];
             tr.appendChild(th);
         }
@@ -107,7 +110,7 @@ function createTable(){
             tr = table.insertRow(-1);
 
             for (let j = 0; j < col.length; j++){
-                var tabCell = tr.insertCell(-1);
+                let tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = response[i][col[j]];
                 tabCell.setAttribute("contenteditable", "true")
                 tabCell.id = `${i}${j}`
@@ -136,7 +139,7 @@ function createTable(){
 
         }
 
-        var divContainer = document.getElementById("showData");
+        let divContainer = document.getElementById("showData");
         divContainer.innerHTML = "";
         divContainer.appendChild(table);
     })
