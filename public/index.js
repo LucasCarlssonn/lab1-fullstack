@@ -50,7 +50,23 @@ function updateUser(ID, nameIndex, ageIndex){
     })
     .then(res => res.json())
     .then(response => {
-        response
+        //createTable();
+
+    });
+}
+
+function showUser(ID){
+    fetch(`/api/users/${ID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
+        document.getElementById("showUser").innerHTML = 
+        `<h3>Details about user</h3>
+        ${JSON.stringify(response)}`
 
     });
 }
@@ -110,6 +126,14 @@ function createTable(){
                  "${i}1",
                  "${i}2")`);
             tabCell.appendChild(updateBtn)
+
+            var tabCell = tr.insertCell(-1);
+            var detailsBtn = document.createElement("button");
+            detailsBtn.innerHTML = "Show Details"
+            detailsBtn.setAttribute("onclick",
+             `showUser(${response[i].ID})`);
+            tabCell.appendChild(detailsBtn)
+
         }
 
         var divContainer = document.getElementById("showData");

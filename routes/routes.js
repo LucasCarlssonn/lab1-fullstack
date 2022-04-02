@@ -63,6 +63,7 @@ router.put("/users/:id", async (req, res) => {
             updateUser.age = req.body.age
         }
         await updateUser.save()
+        res.send({success: `User with ID ${req.params.id} was updated`})
     } catch (error) {
         console.log(error);
         res.status(404)
