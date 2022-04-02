@@ -66,8 +66,8 @@ function showUser(ID){
         document.getElementById("showUser").innerHTML = 
         `<h3>Details about user</h3>
         <p>ID: ${response.ID}<br>
-        Name: ${response.name}</p><br>
-        <p>age: ${response.age}</p><br>
+        Name: ${response.name}<br>
+        age: ${response.age}</p><br>
         ${JSON.stringify(response)}`
 
 
