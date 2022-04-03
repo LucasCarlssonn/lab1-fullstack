@@ -15,7 +15,7 @@ router.get("/users/:id", async (req, res) =>{
         if (foundUser == null){
             throw "Returned user object is null"
         }
-        res.send(foundUser)
+        res.json(foundUser)
     } catch (error) {
         console.log(error);
         res.status(404).send({error: "User doesn't exist"});
@@ -66,18 +66,20 @@ router.put("/users/:id", async (req, res) => {
         res.send({success: `User with ID ${req.params.id} was updated`})
     } catch (error) {
         console.log(error);
-        res.status(404)
-        res.send({error: "User doesn't exist"})
+        res.status(404).send({error: "User doesn't exist"})
     }
     
 });
 router.delete("/users/:id", async (req, res) => {
     try {
-        await user.deleteOne({ID: req.params.id})
-        res.status(200).send({sucess: `User with ID ${req.params.id} was deleted`});
+        const foundUser = await user.findOneAndDelete({ID: req.params.id})
+        if (foundUser == null){
+            throw "Returned user object is null"
+        }
+        // await user.deleteOne({ID: req.params.id})
+        res.status(200).send({success: `User with ID ${req.params.id} was deleted`});
     } catch (error) {
-        res.status(404)
-        res.send({error: "User doesn't exist"})
+        res.status(404).send({error: "User doesn't exist"})
     }
 });
 

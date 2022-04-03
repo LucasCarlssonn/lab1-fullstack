@@ -9,7 +9,7 @@ function deleteUser(ID){
         console.log(res);
     })
     createTable();
-}
+};
 
 
 function createUser(){
@@ -29,7 +29,7 @@ function createUser(){
     })
     .then(res => res.json())
     .then(response => {
-        response
+        console.log(JSON.stringify(response));
 
     });
 }
@@ -50,9 +50,10 @@ function updateUser(ID, nameIndex, ageIndex){
     })
     .then(res => res.json())
     .then(response => {
+        console.log(JSON.stringify(response));
         //createTable();
     });
-}
+};
 
 function showUser(ID){
     fetch(`/api/users/${ID}`, {
@@ -64,15 +65,16 @@ function showUser(ID){
     .then(res => res.json())
     .then(response => {
         document.getElementById("showUser").innerHTML = 
-        `<h3>Details about user</h3>
+        `<h3>Details about user:</h3>
         <p>ID: ${response.ID}<br>
         Name: ${response.name}<br>
-        age: ${response.age}</p><br>
-        ${JSON.stringify(response)}`
+        age: ${response.age}</p>
+        <h4>User data in Json format:<h4/>
+        <p>${JSON.stringify(response)}</p>`
 
 
     });
-}
+};
 
 // Function found at https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
 function createTable(){
@@ -112,15 +114,19 @@ function createTable(){
             for (let j = 0; j < col.length; j++){
                 let tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = response[i][col[j]];
-                tabCell.setAttribute("contenteditable", "true")
+                if (j != 0){
+                    tabCell.setAttribute("contenteditable", "true")
+                }
                 tabCell.id = `${i}${j}`
             }
+            // Create delete button for each row
             var tabCell = tr.insertCell(-1);
             var delBtn = document.createElement("button");
             delBtn.innerHTML = "delete"
             delBtn.setAttribute("onclick", `deleteUser(${response[i].ID})`);
             tabCell.appendChild(delBtn)
 
+            // Create update button for each row
             var tabCell = tr.insertCell(-1);
             var updateBtn = document.createElement("button");
             updateBtn.innerHTML = "update"
@@ -130,6 +136,7 @@ function createTable(){
                  "${i}2")`);
             tabCell.appendChild(updateBtn)
 
+            // Create details button for each row
             var tabCell = tr.insertCell(-1);
             var detailsBtn = document.createElement("button");
             detailsBtn.innerHTML = "Show Details"
@@ -137,12 +144,12 @@ function createTable(){
              `showUser(${response[i].ID})`);
             tabCell.appendChild(detailsBtn)
 
-        }
+        };
 
-        let divContainer = document.getElementById("showData");
-        divContainer.innerHTML = "";
-        divContainer.appendChild(table);
-    })
-}
+        let container = document.getElementById("showData");
+        container.innerHTML = "";
+        container.appendChild(table);
+    });
+};
 
 
