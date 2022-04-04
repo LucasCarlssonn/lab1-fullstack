@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
     ID: {
-        type: String,
-        min: 6,
+        type: Number,
+        min: 1,
         max: 100,
         required: true
     },
@@ -14,9 +14,9 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     age: {
-        type: String,
-        min: 8,
-        max: 100,
+        type: Number,
+        min: 1,
+        max: 3,
         required: true
     }
 });
