@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users</title>
-    <script src="index.js"></script>
     <style>
         th, td, p, input {
             font:14px Verdana;
@@ -20,6 +19,9 @@
         th {
             font-weight:bold;
         }
+        p#create-error{
+            color: red;
+        }
     </style>
 </head>
 <body onload="createTable()">
@@ -27,13 +29,15 @@
     <!-- <input type="button" onclick="createTable()" value="Refresh table"> -->
     <p id="showData"></p>
     <p id="showUser"></p>
-    <form id="create-form" onsubmit="createUser()">
+    <form id="create-form">
         <h2>Create user</h2>
         <label>Name</label><br>
-        <input type="text" id="create-name"><br><br>
+        <input type="text" id="create-name"><br>
         <label>Age</label><br>
-        <input type="age" id="create-age"><br><br>
-        <button type="submit">Create user</button> <br><br>
+        <input type="age" id="create-age"><br>
+        <p id="create-error"></p>
+        <button type="submit">Create user</button>
     </form>
+    <script src="index.js"></script>
 </body>
 </html>

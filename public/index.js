@@ -1,3 +1,8 @@
+const createForm = document.getElementById("create-form");
+const createName = document.getElementById("create-name");
+const createAge = document.getElementById("create-age");
+const createUserErrMsg = document.getElementById("create-error");
+
 function deleteUser(ID){
     fetch(`/api/users/${ID}`, {
         method: "DELETE",
@@ -11,28 +16,6 @@ function deleteUser(ID){
     createTable();
 };
 
-
-function createUser(){
-    const createName = document.getElementById("create-name");
-    const createAge = document.getElementById("create-age");
-    const userDetails = {
-        name: createName.value,
-        age: createAge.value
-    };
-
-    fetch("/api/users", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(userDetails)
-    })
-    .then(res => res.json())
-    .then(response => {
-        console.log(JSON.stringify(response));
-
-    });
-}
 function updateUser(ID, nameIndex, ageIndex){
 
     const name = document.getElementById(nameIndex).innerHTML;
@@ -152,4 +135,54 @@ function createTable(){
     });
 };
 
+// function createUser(){
+//     const createName = document.getElementById("create-name");
+//     const createAge = document.getElementById("create-age");
+//     const createUserErrMsg = document.getElementById("create-error");
 
+//     const userDetails = {
+//         name: createName.value,
+//         age: createAge.value
+//     };
+
+//     fetch("/api/users", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(userDetails)
+//     })
+//     .then(res => res.json())
+//     .then(response => {
+//         if(response.error){
+//             createUserErrMsg.innerHTML = response.error;
+//         } else {
+//             createUserErrMsg.innerHTML = "";
+//         }
+
+//     });
+// }
+createForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const userDetails = {
+        name: createName.value,
+        age: createAge.value
+    };
+
+    fetch("/api/users", {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(userDetails)
+    })
+    .then(res => res.json())
+    .then(response => {
+        if(response.error){
+            createUserErrMsg.innerHTML = response.error;
+        } else {
+            createUserErrMsg.innerHTML = "";
+        }
+        createTable();
+    });
+});

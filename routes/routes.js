@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const user = require("../model/user.js");
+const {validateUser} = require("../validation");
 
 router.get("/", async (req, res) => {
     res.send("Hello World!")
@@ -22,6 +23,13 @@ router.get("/users/:id", async (req, res) =>{
     }
 });
 router.post("/users", async (req, res) => {
+
+    const {error} = validateUser(req.body);
+    if (error){
+        return res.status(400).json({error: error.details[0].message})
+    }
+
+
     const users = await user.find();
     if(users.length == 0){
         largest = "0";
@@ -37,11 +45,17 @@ router.post("/users", async (req, res) => {
         }
     }
     const userID = parseInt(largest) + 1
+
+    const existingUser = await user.findOne({ID: userID})
+    if (existingUser){
+        return res.status(409).json({error: "User already exists."})
+    }    
     const newUser = new user({
         ID: userID,
         name: req.body.name,
         age: req.body.age
     });
+
     try {
         await newUser.save();
         const users = await user.find();
@@ -49,7 +63,7 @@ router.post("/users", async (req, res) => {
         console.log("User created");
     } catch (error) {
         console.log(error);
-        res.status(409).send({error: "User already exists"});
+        res.status(409).json(error);
     }
 });
 
