@@ -88,12 +88,12 @@ router.delete("/users/:id", async (req, res) => {
     try {
         const foundUser = await user.findOneAndDelete({ID: req.params.id})
         if (foundUser == null){
-            throw "Returned user object is null"
+            return res.status(404).send({error: "User doesn't exist"})
         }
         // await user.deleteOne({ID: req.params.id})
         res.status(200).send({success: `User with ID ${req.params.id} was deleted`});
     } catch (error) {
-        res.status(404).send({error: "User doesn't exist"})
+        res.status(404).send({error: error})
     }
 });
 
