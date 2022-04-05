@@ -13,13 +13,13 @@ router.get("/users", async (req, res) => {
 router.get("/users/:id", async (req, res) =>{
     try {
         const foundUser = await user.findOne({ID: req.params.id})
-        if (foundUser == null){
-            throw "Returned user object is null"
+        if (!foundUser){
+            return res.status(404).json({error: "User doesn't exist"});
         }
         res.json(foundUser)
     } catch (error) {
         console.log(error);
-        res.status(404).send({error: "User doesn't exist"});
+        res.status(404).json({error: error});
     }
 });
 router.post("/users", async (req, res) => {
@@ -59,7 +59,7 @@ router.post("/users", async (req, res) => {
     try {
         await newUser.save();
         const users = await user.find();
-        res.status(201).send(users);
+        res.status(201).json(users);
         console.log("User created");
     } catch (error) {
         console.log(error);
@@ -72,7 +72,7 @@ router.put("/users/:id", async (req, res) => {
         const updateUser = await user.findOne({ID: req.params.id});
 
         if (!updateUser){
-            return res.status(404).send({error: "User doesn't exist"})
+            return res.status(404).json({error: "User doesn't exist"})
         }
         if (req.body.name){
             updateUser.name = req.body.name
@@ -84,7 +84,7 @@ router.put("/users/:id", async (req, res) => {
         res.send({success: `User with ID ${req.params.id} was updated`})
     } catch (error) {
         console.log(error);
-        res.status(404).send({error: error})
+        res.status(404).json({error: error})
     }
     
 });
@@ -92,12 +92,11 @@ router.delete("/users/:id", async (req, res) => {
     try {
         const foundUser = await user.findOneAndDelete({ID: req.params.id})
         if (!foundUser){
-            return res.status(404).send({error: "User doesn't exist"})
+            return res.status(404).json({error: "User doesn't exist"})
         }
-        // await user.deleteOne({ID: req.params.id})
-        res.status(200).send({success: `User with ID ${req.params.id} was deleted`});
+        res.status(200).json({success: `User with ID ${req.params.id} was deleted`});
     } catch (error) {
-        res.status(404).send({error: error})
+        res.status(404).json({error: error})
     }
 });
 
