@@ -63,7 +63,7 @@ router.post("/users", async (req, res) => {
         console.log("User created");
     } catch (error) {
         console.log(error);
-        res.status(409).json(error);
+        res.status(400).json(error);
     }
 });
 
@@ -84,7 +84,7 @@ router.put("/users/:id", async (req, res) => {
         res.send({success: `User with ID ${req.params.id} was updated`})
     } catch (error) {
         console.log(error);
-        res.status(404).json({error: error})
+        res.status(400).json({error: error})
     }
     
 });
@@ -96,7 +96,7 @@ router.delete("/users/:id", async (req, res) => {
         }
         res.status(200).json({success: `User with ID ${req.params.id} was deleted`});
     } catch (error) {
-        res.status(404).json({error: error})
+        res.status(400).json({error: error})
     }
 });
 
