@@ -59,7 +59,8 @@ function showUser(ID){
     });
 };
 
-// Function found at https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
+// Base code for the function createTable found at https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
+// Modifications made to fulfill lab requirements.
 function createTable(){
     fetch("/api/users", {
         method: "GET",
@@ -135,33 +136,6 @@ function createTable(){
     });
 };
 
-// function createUser(){
-//     const createName = document.getElementById("create-name");
-//     const createAge = document.getElementById("create-age");
-//     const createUserErrMsg = document.getElementById("create-error");
-
-//     const userDetails = {
-//         name: createName.value,
-//         age: createAge.value
-//     };
-
-//     fetch("/api/users", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(userDetails)
-//     })
-//     .then(res => res.json())
-//     .then(response => {
-//         if(response.error){
-//             createUserErrMsg.innerHTML = response.error;
-//         } else {
-//             createUserErrMsg.innerHTML = "";
-//         }
-
-//     });
-// }
 createForm.addEventListener("submit", e => {
     e.preventDefault();
     const userDetails = {
